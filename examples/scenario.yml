@@ -1,0 +1,47 @@
+apiVersion: phenix.sandia.gov/v1
+kind: Scenario
+metadata:
+  name: inf_scenario
+  annotations:
+    topology: inf_topo
+spec:
+  apps:
+    experiment:     
+    - name: test-user-app
+      # The map associated w/ the app name here would contain any
+      # configuration details needed to configure the app.
+      metadata: {}
+      #      - name: ccDropper
+      #      metadata:
+      #  cc_hosts:
+      #    - hostname: "*"   
+      #      agent_path: /home/ubuntu/sandia/ccDropper/agents
+      #      agent: miniccc
+      #      auto_start: true
+      #      service_type: sysinitv
+      #      agent_args: "-parent 172.16.10.254"
+      #    - hostname: site_A_server
+      #      agent_path: /home/ubuntu/sandia/ccDropper/agents 
+      #      agent: miniccc
+      #      auto_start: true
+      #      service_type: systemd
+      #      agent_args: "-serial /dev/virtio-ports/cc"
+    host:
+#    - name: protonuke
+#      hosts:
+#      - hostname: turbine-01 # hostname of topology node to apply it to
+#        metadata:
+#          # protonuke app metadata for this topology node
+#          args: -logfile /var/log/protonuke.log -level debug -http -https -smtp -ssh 192.168.100.100
+#    - name: wireguard
+#      hosts:
+#      - hostname: turbine-01
+#        metadata:
+#          # wireguard app metadata for this topology node
+#          infrastructure:
+#            private_key: GLlxWJom8cQViGHojqOUShWIZG7IsSX8
+#            address: 10.255.255.1/24
+#            listen_port: 51820
+#          peers:
+#            public_key: +joyya2F9g72qbKBtPDn00mIevG1j1OqeN76ylFLsiE=
+#            allowed_ips: 10.255.255.10/32

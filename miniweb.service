@@ -1,0 +1,17 @@
+[Unit]
+Description=Start miniweb
+Requires=minimega.service
+After=minimega.service
+PartOf=phenix-web.service
+
+[Service]
+Type=simple
+ExecStart=/opt/minimega/bin/miniweb -console /opt/minimega/bin/minimega
+WorkingDirectory=/opt/minimega
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
+
+
