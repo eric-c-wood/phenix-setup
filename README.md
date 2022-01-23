@@ -9,7 +9,7 @@ To setup phenix, follow the steps below:
 6) sudo apt install git
 7) Clone this repository git clone https://github.com/eric-c-wood/phenix-setup.git
 8) cd phenix-setup
-9) sudo chmod +x setup.sh
+9) chmod +x setup.sh
 10) ./setup.sh
   
 
