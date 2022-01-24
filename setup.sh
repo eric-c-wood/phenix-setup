@@ -72,7 +72,7 @@ sudo tar -xzf images.tar.gz -C /phenix/images/
 
 #setup minimega
 echo "Setting up minimega"
-cd /opt
+cd ~
 sudo git clone https://github.com/sandia-minimega/minimega.git
 cd minimega;
 gvm use go1.12;
@@ -80,18 +80,22 @@ gvm use go1.12;
 
 #setup phenix
 echo "Setting up phenix"
-cd /opt
+cd ~
 sudo git clone https://github.com/sandia-minimega/phenix.git
 cd phenix;
 gvm use go1.17;
 yarn add sass
 make bin/phenix
 
+sudo mv ~/phenix /opt/phenix
+sudo mv ~/minimega /opt/minimega
+
 #setup ovs bridge
 sudo ovs-vsctl add-br mega_bridge
 sudo ovs-vsctl add-br phenix
 
-#load the topology file,this defines the network and nodes including node configuration   
+#load the topology file,this defines the network and nodes including node configuration  
+export PATH=$PATH:/opt/phenix/bin:/opt/minimega/bin 
 phenix cfg create ~/phenix-setup/examples/topology.yml --skip-validation --log.error-stderr  
 #load the scenario file, this defines a topology and any apps / host meta data  
 phenix cfg create ~/phenix-setup/examples/scenario.yml --skip-validation --log.error-stderr  
@@ -100,10 +104,9 @@ phenix cfg create ~/phenix-setup/examples/scenario.yml --skip-validation --log.e
 echo "hello world" > /tmp/blah  
 
 #setup services
-cd ~/miniEnv
-sudo systemctl enable phenix-web.service
-sudo systemctl enable miniweb.service
-sudo systemctl enable minimega.service
+sudo systemctl enable ~/phenix-setup/phenix-web.service
+sudo systemctl enable ~/phenix-setup/miniweb.service
+sudo systemctl enable ~/phenix-setup/minimega.service
 
 #start all the services
 sudo systemctl start phenix-web
