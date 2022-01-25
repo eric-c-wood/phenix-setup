@@ -5,10 +5,11 @@ After=minimega.service
 
 [Service]
 Type=simple
-ExecStart=/opt/phenix/bin/phenix ui --log.error-stderr
+Environment=PATH=/opt/phenix/bin:/opt/minimega/bin
+Environment=PHENIX_STORE_ENDPOINT=bolt:///etc/phenix/store.bdb
+WorkingDirectory=/phenix
+ExecStart=/opt/phenix/bin/phenix ui --log.error-stderr --store.endpoint=${PHENIX_STORE_ENDPOINT}
 
 
 [Install]
 WantedBy=multi-user.target
-
-

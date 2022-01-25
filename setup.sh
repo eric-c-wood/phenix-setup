@@ -8,7 +8,7 @@
 #Packages:
 echo "Getting base set of packages"
 sudo apt update
-sudo apt -y install libpcap-dev libreadline-dev qemu qemu-kvm openvswitch-switch build-essential unzip genisoimage debootstrap syslinux extlinux bird ntpdate curl git tmux net-tools bison
+sudo apt -y install libpcap-dev libreadline-dev qemu qemu-kvm openvswitch-switch build-essential unzip genisoimage debootstrap syslinux extlinux bird ntpdate curl tmux net-tools bison
 
 #Git some helper tools ((not required but makes dealing with multiple go versions easier) 
 echo "Installing GVM"
@@ -37,7 +37,7 @@ export NVM_DIR="$HOME/.nvm"
 
 # Install node js and npm
 echo "Installing node js and npm"
-nvm install node
+nvm install 14.2
 nvm install --lts
 
 # Install yarn
@@ -73,7 +73,7 @@ sudo tar -xzf images.tar.gz -C /phenix/images/
 #setup minimega
 echo "Setting up minimega"
 cd ~
-sudo git clone https://github.com/sandia-minimega/minimega.git
+git clone https://github.com/sandia-minimega/minimega.git
 cd minimega;
 gvm use go1.12;
 ./build.bash
@@ -81,10 +81,9 @@ gvm use go1.12;
 #setup phenix
 echo "Setting up phenix"
 cd ~
-sudo git clone https://github.com/sandia-minimega/phenix.git
+git clone https://github.com/sandia-minimega/phenix.git
 cd phenix;
 gvm use go1.17;
-yarn add sass
 make bin/phenix
 
 sudo mv ~/phenix /opt/phenix
@@ -96,9 +95,10 @@ sudo ovs-vsctl add-br phenix
 
 #load the topology file,this defines the network and nodes including node configuration  
 export PATH=$PATH:/opt/phenix/bin:/opt/minimega/bin 
-phenix cfg create ~/phenix-setup/examples/topology.yml --skip-validation --log.error-stderr  
+export PHENIX_STORE_ENDPOINT=bolt:///etc/phenix/store.bdb
+phenix cfg create ~/phenix-setup/examples/topology.yml --skip-validation --log.error-stderr
 #load the scenario file, this defines a topology and any apps / host meta data  
-phenix cfg create ~/phenix-setup/examples/scenario.yml --skip-validation --log.error-stderr  
+phenix cfg create ~/phenix-setup/examples/scenario.yml --skip-validation --log.error-stderr
 
 #used to show file injection see topology  
 echo "hello world" > /tmp/blah  
