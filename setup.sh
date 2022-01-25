@@ -39,7 +39,6 @@ export NVM_DIR="$HOME/.nvm"
 echo "Installing node js and npm"
 nvm install 14.2
 
-
 # Install yarn
 echo "Installing yarn"
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -;
@@ -95,10 +94,10 @@ sudo ovs-vsctl add-br phenix
 
 #load the topology file,this defines the network and nodes including node configuration  
 export PATH=$PATH:/opt/phenix/bin:/opt/minimega/bin 
-export PHENIX_STORE_ENDPOINT=bolt:///etc/phenix/store.bdb
 phenix cfg create ~/phenix-setup/examples/topology.yml --skip-validation --log.error-stderr
 #load the scenario file, this defines a topology and any apps / host meta data  
 phenix cfg create ~/phenix-setup/examples/scenario.yml --skip-validation --log.error-stderr
+sudo cp ~/.phenix.bdb /etc/phenix/store.bdb
 
 #used to show file injection see topology  
 echo "hello world" > /tmp/blah  
