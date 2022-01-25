@@ -97,6 +97,7 @@ export PATH=$PATH:/opt/phenix/bin:/opt/minimega/bin
 phenix cfg create ~/phenix-setup/examples/topology.yml --skip-validation --log.error-stderr
 #load the scenario file, this defines a topology and any apps / host meta data  
 phenix cfg create ~/phenix-setup/examples/scenario.yml --skip-validation --log.error-stderr
+sudo mkdir -p /etc/phenix
 sudo cp ~/.phenix.bdb /etc/phenix/store.bdb
 
 #used to show file injection see topology  
