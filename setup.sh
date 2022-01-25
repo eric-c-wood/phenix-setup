@@ -38,7 +38,7 @@ export NVM_DIR="$HOME/.nvm"
 # Install node js and npm
 echo "Installing node js and npm"
 nvm install 14.2
-nvm install --lts
+
 
 # Install yarn
 echo "Installing yarn"
