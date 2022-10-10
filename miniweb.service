@@ -8,9 +8,3 @@ PartOf=phenix-web.service
 Type=simple
 WorkingDirectory=/opt/minimega
 ExecStart=/opt/minimega/bin/miniweb -console /opt/minimega/bin/minimega
-
-
-[Install]
-WantedBy=multi-user.target
-
-

@@ -19,12 +19,12 @@ gvm use go1.4
 export GOROOT_BOOTSTRAP=$GOROOT
 
 #go 1.12 to build minimega
-echo "Installing go 1.12"
-gvm install go1.12
+echo "Installing go 1.14"
+gvm install go1.14
 
 #go 1.17 to build phenix 
-echo "Installing go 1.17"
-gvm install go1.17
+echo "Installing go 1.18"
+gvm install go1.18
 
 #Phenix web server dependencies
 
@@ -56,57 +56,39 @@ rm -f $PROTOC_ZIP
 
 #setup image directory
 sudo mkdir -p /phenix/images
-
-# get the images (copy paste into a terminal window) 
-echo "Downloading experiment images"
-cd /tmp
-fileId=1s9YC8pzdISDbmD1Zs5TwPVa5NLfrWjsu
-fileName=images.tar.gz
-curl -sc /tmp/cookie "https://drive.google.com/uc?export=download&id=${fileId}" > /dev/null
-code="$(awk '/_warning_/ {print $NF}' /tmp/cookie)"  
-curl -Lb /tmp/cookie "https://drive.google.com/uc?export=download&confirm=${code}&id=${fileId}" -o ${fileName} 
-
-echo "Unpacking images to /phenix/images"
-sudo tar -xzf images.tar.gz -C /phenix/images/
+sudo chown -R $USER:$USER /phenix/images
 
 #setup minimega
 echo "Setting up minimega"
 cd ~
 git clone https://github.com/sandia-minimega/minimega.git
-cd minimega;
-gvm use go1.12;
+sudo mv ~/minimega /opt/minimega
+sudo chown -R $USER:$USER /opt/minimega
+cp ~/phenix-setup/mini*.service /opt/minimega
+sed -i s/MM_CONTEXT=minimega/MM_CONTEXT=$(hostname -s)/ /opt/minimega/minimega.service
+cd /opt/minimega/scripts;
+gvm use go1.14;
 ./build.bash
 
 #setup phenix
 echo "Setting up phenix"
 cd ~
 git clone https://github.com/sandia-minimega/phenix.git
-cd phenix;
-gvm use go1.17;
-make bin/phenix
-
 sudo mv ~/phenix /opt/phenix
-sudo mv ~/minimega /opt/minimega
+sudo chown -R $USER:$USER /opt/phenix
+cp ~/phenix-setup/phenix*.service /opt/phenix
+cd /opt/phenix;
+gvm use go1.18;
+make bin/phenix
 
 #setup ovs bridge
 sudo ovs-vsctl add-br mega_bridge
 sudo ovs-vsctl add-br phenix
 
-#load the topology file,this defines the network and nodes including node configuration  
-export PATH=$PATH:/opt/phenix/bin:/opt/minimega/bin 
-phenix cfg create ~/phenix-setup/examples/topology.yml --skip-validation --log.error-stderr
-#load the scenario file, this defines a topology and any apps / host meta data  
-phenix cfg create ~/phenix-setup/examples/scenario.yml --skip-validation --log.error-stderr
-sudo mkdir -p /etc/phenix
-sudo cp ~/.phenix.bdb /etc/phenix/store.bdb
-
-#used to show file injection see topology  
-echo "hello world" > /tmp/blah  
-
 #setup services
-sudo systemctl enable ~/phenix-setup/phenix-web.service
-sudo systemctl enable ~/phenix-setup/miniweb.service
-sudo systemctl enable ~/phenix-setup/minimega.service
+sudo systemctl enable /opt/phenix/phenix-web.service
+sudo systemctl enable /opt/minimega/miniweb.service
+sudo systemctl enable /opt/minimega/minimega.service
 
 #start all the services
 sudo systemctl start phenix-web

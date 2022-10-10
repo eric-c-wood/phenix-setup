@@ -1,6 +1,5 @@
 [Unit]
 Description=minimega Service
-After=multi-user.target
 PartOf=phenix-web.service
 
 [Service]
@@ -26,9 +25,3 @@ ExecStart=/opt/minimega/bin/minimega \
   -level=${MM_LOGLEVEL} \
   -logfile=${MM_LOGFILE}
 ExecStop=/usr/bin/pkill -9 "'(minimega|qemu)`"
-
-
-[Install]
-WantedBy=multi-user.target
-
-
