@@ -4,6 +4,7 @@ PartOf=phenix-web.service
 
 [Service]
 Type=simple
+LimitNOFILE=infinity
 Environment="MM_BASE=/tmp/minimega"
 Environment="MM_FILEPATH=/phenix/images"
 Environment="MM_BROADCAST=255.255.255.255"
@@ -13,7 +14,7 @@ Environment="MM_CONTEXT=minimega"
 Environment="MM_LOGLEVEL=info"
 Environment="MM_LOGFILE=/var/log/minimega.log"
 EnvironmentFile=-/etc/default/minimega
-ExecStart=/opt/minimega/bin/minimega \
+ExecStart=/opt/minimega/bin/minimega \  
   -force \
   -nostdin \
   -base=${MM_BASE} \
@@ -25,3 +26,8 @@ ExecStart=/opt/minimega/bin/minimega \
   -level=${MM_LOGLEVEL} \
   -logfile=${MM_LOGFILE}
 ExecStop=/usr/bin/pkill -9 "'(minimega|qemu)`"
+
+
+
+
+
