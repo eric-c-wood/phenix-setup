@@ -18,15 +18,15 @@ gvm install go1.4 -B
 gvm use go1.4
 export GOROOT_BOOTSTRAP=$GOROOT
 
-#go 1.17.13 to build compile go 1.20.7
+#go 1.17.13 to build/compile go 1.21.5
 echo "Installing go 1.17.13"
 gvm install go1.17.13
 gvm use go1.17.13
 export GOROOT_BOOTSTRAP=$GOROOT
 
-#go 1.20.7 to build phenix 
-echo "Installing go 1.20.7"
-gvm install go1.20.7
+#go 1.21.5 to build phenix/minimega 
+echo "Installing go 1.21.5"
+gvm install go1.21.5
 
 #Phenix web server dependencies
 
@@ -71,7 +71,7 @@ sudo chown -R $USER:$USER /opt/minimega
 cp ~/phenix-setup/mini*.service /opt/minimega
 sed -i s/MM_CONTEXT=minimega/MM_CONTEXT=$(hostname -s)/ /opt/minimega/minimega.service
 cd /opt/minimega/scripts;
-gvm use go1.20.7;
+gvm use go1.21.5;
 ./build.bash
 
 #setup phenix
@@ -82,7 +82,7 @@ sudo mv ~/sceptre-phenix /opt/phenix
 sudo chown -R $USER:$USER /opt/phenix
 cp ~/phenix-setup/phenix*.service /opt/phenix
 cd /opt/phenix;
-gvm use go1.20.7;
+gvm use go1.21.5;
 make bin/phenix
 
 #setup ovs bridge
