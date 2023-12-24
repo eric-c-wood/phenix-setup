@@ -81,6 +81,7 @@ git clone https://github.com/sandialabs/sceptre-phenix.git
 sudo mv ~/sceptre-phenix /opt/phenix
 sudo chown -R $USER:$USER /opt/phenix
 cp ~/phenix-setup/phenix*.service /opt/phenix
+echo "VUE_APP_AUTH=enabled" > /opt/phenix/src/js/.env.local
 cd /opt/phenix;
 gvm use go1.21.5;
 make bin/phenix
