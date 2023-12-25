@@ -37,9 +37,16 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# Install node js and npm
-echo "Installing node js and npm"
-nvm install 14.21.3
+# Install nodejs 20.10.0
+echo "Installing nodejs 20.10"
+sudo apt -y install curl
+sudo apt-get install -y ca-certificates curl gnupg
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+NODE_MAJOR=20
+echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+sudo apt-get update
+sudo apt-get install nodejs -y
 
 # Install yarn
 echo "Installing yarn"
@@ -81,7 +88,11 @@ git clone https://github.com/sandialabs/sceptre-phenix.git
 sudo mv ~/sceptre-phenix /opt/phenix
 sudo chown -R $USER:$USER /opt/phenix
 cp ~/phenix-setup/phenix*.service /opt/phenix
+# Get an updated package.json
+cp $HOME/phenix-setup/package.json /opt/phenix/src/js
 echo "VUE_APP_AUTH=enabled" > /opt/phenix/src/js/.env.local
+# Needed as a temporary fix for the npx redocly/cli path issues
+ln -s /opt/phenix/src/js/node_modules /opt/phenix/node_modules
 cd /opt/phenix;
 gvm use go1.21.5;
 make bin/phenix
