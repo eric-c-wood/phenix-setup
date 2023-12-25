@@ -9,7 +9,7 @@ To setup phenix, follow the steps below:
 4) If using a VM, allocate at least 4 GB RAM.  Otherwise, 3 GB of free RAM should be sufficient.
 5) Navigate to the home directory on the Ubuntu 20.04 LTS (e.g. `cd ~`)
 6) `sudo apt -y install git`
-7) Clone this repository `git clone https://github.com/eric-c-wood/phenix-setup.git`
+7) Clone this repository `git clone -b NodeJS20-Updates https://github.com/eric-c-wood/phenix-setup.git`
 8) `cd phenix-setup`
 9) `source setup.sh`
 10) Navigate to the opened firefox browser which should be pointing to localhost:3000
