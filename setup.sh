@@ -90,16 +90,16 @@ sudo chown -R $USER:$USER /opt/phenix
 cp ~/phenix-setup/phenix*.service /opt/phenix
 
 # Modify the phenix/src/go for new version of redoc-cli 
-sed -i 's/redoc-cli build/redocly build-docs/g' /opt/build/phenix/src/go/Makefile
+sed -i 's/redoc-cli build/redocly build-docs/g' /opt/phenix/src/go/Makefile
 
 # Temporarily patch VUE_PATH_AUTH recursion/signin page error
 echo "VUE_APP_AUTH=enabled" > /opt/phenix/src/js/.env.local
 
 # Update the linter
-sed -i 's|babel-eslint|@babel/eslint-parser|g' /opt/build/phenix/src/js/.eslintrc.js
+sed -i 's|babel-eslint|@babel/eslint-parser|g' /opt/phenix/src/js/.eslintrc.js
 
 # Turn off the linter for VUE since the errors are mostly ignored
-echo "**/*.vue" > /opt/build/phenix/src/js/.eslintignore
+echo "**/*.vue" > /opt/phenix/src/js/.eslintignore
 
 # Get an updated package.json
 cp $HOME/phenix-setup/package.json /opt/phenix/src/js
