@@ -104,6 +104,9 @@ echo "**/*.vue" > /opt/phenix/src/js/.eslintignore
 # Get an updated package.json
 cp $HOME/phenix-setup/package.json /opt/phenix/src/js
 
+# Get an updated vue.config.js for the migration build
+cp $HOME/phenix-setup/vue.config.js /opt/phenix/src/js
+
 # Needed as a temporary fix for the npx redocly/cli path issues
 ln -s /opt/phenix/src/js/node_modules /opt/phenix/node_modules
 
