@@ -23,7 +23,7 @@ module.exports = {
         ws: true
       }
     }
-  }
+  },
 
   chainWebpack: (config) => {
     config.resolve.alias.set('vue', '@vue/compat')
