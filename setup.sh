@@ -95,17 +95,8 @@ sed -i 's/redoc-cli build/redocly build-docs/g' /opt/phenix/src/go/Makefile
 # Temporarily patch VUE_PATH_AUTH recursion/signin page error
 echo "VUE_APP_AUTH=enabled" > /opt/phenix/src/js/.env.local
 
-# Update the linter
-sed -i 's|babel-eslint|@babel/eslint-parser|g' /opt/phenix/src/js/.eslintrc.js
-
-# Turn off the linter for VUE since the errors are mostly ignored
-echo "**/*.vue" > /opt/phenix/src/js/.eslintignore
-
 # Get an updated package.json
 cp $HOME/phenix-setup/package.json /opt/phenix/src/js
-
-# Get an updated vue.config.js for the migration build
-cp $HOME/phenix-setup/vue.config.js /opt/phenix/src/js
 
 # Needed as a temporary fix for the npx redocly/cli path issues
 ln -s /opt/phenix/src/js/node_modules /opt/phenix/node_modules
